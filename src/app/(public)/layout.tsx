@@ -7,13 +7,18 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <header className="border-b border-zinc-200 bg-white/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
           <Link href="/" className="flex items-center gap-3">
-            <Image
-              src="/logo.png"
-              alt="LASU Engineering 2001 Alumni"
-              width={32}
-              height={32}
-              priority
-            />
+            <span className="inline-flex rounded-full bg-white p-0.5 shadow-sm ring-1 ring-zinc-200">
+              <span className="relative size-10 overflow-hidden rounded-full">
+                <Image
+                  src="/logo.png"
+                  alt="LASU Engineering 2001 Alumni"
+                  fill
+                  sizes="40px"
+                  className="object-cover scale-110"
+                  priority
+                />
+              </span>
+            </span>
             <div className="leading-tight">
               <div className="text-sm font-semibold tracking-tight">
                 LASU Engineering Class of 2001

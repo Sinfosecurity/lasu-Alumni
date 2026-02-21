@@ -22,13 +22,18 @@ export default async function AuthedLayout({
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
           <div className="flex items-center gap-4">
             <Link href="/" className="flex items-center gap-3">
-              <Image
-                src="/logo.png"
-                alt="LASU Engineering 2001 Alumni"
-                width={28}
-                height={28}
-                priority
-              />
+              <span className="inline-flex rounded-full bg-white p-0.5 shadow-sm ring-1 ring-zinc-200">
+                <span className="relative size-9 overflow-hidden rounded-full">
+                  <Image
+                    src="/logo.png"
+                    alt="LASU Engineering 2001 Alumni"
+                    fill
+                    sizes="36px"
+                    className="object-cover scale-110"
+                    priority
+                  />
+                </span>
+              </span>
               <span className="text-sm font-semibold tracking-tight text-zinc-900">
                 LASU Eng ’01 Alumni
               </span>
