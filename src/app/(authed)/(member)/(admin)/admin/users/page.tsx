@@ -60,7 +60,7 @@ export default async function AdminUsersPage({
           />
           <button
             type="submit"
-            className="inline-flex h-10 items-center justify-center rounded-md bg-zinc-900 px-4 text-sm font-medium text-white hover:bg-zinc-800"
+            className="inline-flex h-10 items-center justify-center rounded-md bg-brand-700 px-4 text-sm font-medium text-white hover:bg-brand-800"
           >
             Search
           </button>
@@ -108,7 +108,7 @@ export default async function AdminUsersPage({
                           </select>
                           <button
                             type="submit"
-                            className="rounded-md bg-zinc-900 px-3 py-2 text-xs font-medium text-white hover:bg-zinc-800"
+                            className="rounded-md bg-brand-700 px-3 py-2 text-xs font-medium text-white hover:bg-brand-800"
                           >
                             Save
                           </button>

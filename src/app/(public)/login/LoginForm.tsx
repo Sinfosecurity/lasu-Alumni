@@ -42,7 +42,7 @@ export function LoginForm() {
       </p>
 
       {verified ? (
-        <div className="mt-6 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+        <div className="mt-6 rounded-md border border-brand-200 bg-brand-50 px-4 py-3 text-sm text-brand-900">
           Email verified successfully. You can sign in now.
         </div>
       ) : null}
@@ -80,7 +80,7 @@ export function LoginForm() {
         <button
           type="submit"
           disabled={pending}
-          className="inline-flex h-11 w-full items-center justify-center rounded-md bg-zinc-900 px-4 text-sm font-medium text-white transition-colors hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex h-11 w-full items-center justify-center rounded-md bg-brand-700 px-4 text-sm font-medium text-white transition-colors hover:bg-brand-800 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {pending ? "Signing in…" : "Sign in"}
         </button>

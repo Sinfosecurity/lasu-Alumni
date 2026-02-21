@@ -70,7 +70,7 @@ export default async function AdminMembersPage() {
                         <input type="hidden" name="userId" value={u.id} />
                         <button
                           type="submit"
-                          className="rounded-md bg-emerald-600 px-3 py-2 text-xs font-medium text-white hover:bg-emerald-700"
+                          className="rounded-md bg-brand-700 px-3 py-2 text-xs font-medium text-white hover:bg-brand-800"
                         >
                           Approve
                         </button>

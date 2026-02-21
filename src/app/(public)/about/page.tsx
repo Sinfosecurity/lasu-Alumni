@@ -60,7 +60,7 @@ export default function AboutPage() {
           <div className="flex flex-col gap-3 sm:flex-row md:justify-end">
             <Link
               href="/register"
-              className="inline-flex h-11 items-center justify-center rounded-md bg-emerald-600 px-5 text-sm font-medium text-white hover:bg-emerald-700"
+              className="inline-flex h-11 items-center justify-center rounded-md bg-brand-600 px-5 text-sm font-medium text-white hover:bg-brand-700"
             >
               Request membership
             </Link>

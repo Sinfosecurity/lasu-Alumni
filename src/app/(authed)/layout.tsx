@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -20,8 +21,17 @@ export default async function AuthedLayout({
       <header className="border-b border-zinc-200 bg-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
           <div className="flex items-center gap-4">
-            <Link href="/" className="text-sm font-semibold tracking-tight">
-              LASU Eng ’01 Alumni
+            <Link href="/" className="flex items-center gap-3">
+              <Image
+                src="/logo.png"
+                alt="LASU Engineering 2001 Alumni"
+                width={28}
+                height={28}
+                priority
+              />
+              <span className="text-sm font-semibold tracking-tight text-zinc-900">
+                LASU Eng ’01 Alumni
+              </span>
             </Link>
             <nav className="hidden items-center gap-3 text-sm text-zinc-600 md:flex">
               <Link className="hover:text-zinc-900" href="/dashboard">

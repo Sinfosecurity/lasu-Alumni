@@ -28,7 +28,7 @@ export function RegisterForm({ departments }: { departments: DepartmentOption[] 
           <div
             className={`rounded-md border px-4 py-3 text-sm ${
               state.ok
-                ? "border-emerald-200 bg-emerald-50 text-emerald-900"
+                ? "border-brand-200 bg-brand-50 text-brand-900"
                 : "border-red-200 bg-red-50 text-red-900"
             }`}
           >
@@ -226,7 +226,7 @@ export function RegisterForm({ departments }: { departments: DepartmentOption[] 
         <button
           type="submit"
           disabled={pending}
-          className="inline-flex h-11 w-full items-center justify-center rounded-md bg-zinc-900 px-4 text-sm font-medium text-white transition-colors hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex h-11 w-full items-center justify-center rounded-md bg-brand-700 px-4 text-sm font-medium text-white transition-colors hover:bg-brand-800 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {pending ? "Submitting…" : "Submit membership request"}
         </button>

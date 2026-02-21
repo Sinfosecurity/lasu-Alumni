@@ -8,7 +8,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
           <Link href="/" className="flex items-center gap-3">
             <Image
-              src="/logo.svg"
+              src="/logo.png"
               alt="LASU Engineering 2001 Alumni"
               width={32}
               height={32}
@@ -33,7 +33,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
               Login
             </Link>
             <Link
-              className="rounded-md bg-emerald-700 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-800"
+              className="rounded-md bg-brand-700 px-3 py-2 text-sm font-medium text-white hover:bg-brand-800"
               href="/register"
             >
               Request membership
@@ -45,7 +45,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
               Login
             </Link>
             <Link
-              className="rounded-md bg-emerald-700 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-800"
+              className="rounded-md bg-brand-700 px-3 py-2 text-sm font-medium text-white hover:bg-brand-800"
               href="/register"
             >
               Join

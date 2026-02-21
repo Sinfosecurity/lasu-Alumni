@@ -139,7 +139,7 @@ export default async function AdminEventsPage() {
           <div className="md:col-span-2 flex justify-end">
             <button
               type="submit"
-              className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800"
+              className="rounded-md bg-brand-700 px-4 py-2 text-sm font-medium text-white hover:bg-brand-800"
             >
               Create event
             </button>

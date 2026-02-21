@@ -36,7 +36,7 @@ export default async function ProfilePage({
       </div>
 
       {saved ? (
-        <div className="rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+        <div className="rounded-md border border-brand-200 bg-brand-50 px-4 py-3 text-sm text-brand-900">
           Profile saved.
         </div>
       ) : null}
@@ -151,7 +151,7 @@ export default async function ProfilePage({
         <div className="mt-6 flex justify-end">
           <button
             type="submit"
-            className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800"
+            className="rounded-md bg-brand-700 px-4 py-2 text-sm font-medium text-white hover:bg-brand-800"
           >
             Save changes
           </button>

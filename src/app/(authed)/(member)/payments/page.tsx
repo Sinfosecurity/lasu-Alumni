@@ -34,7 +34,7 @@ export default async function PaymentsPage({
       </div>
 
       {success ? (
-        <div className="rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+        <div className="rounded-md border border-brand-200 bg-brand-50 px-4 py-3 text-sm text-brand-900">
           Payment completed. Your receipt will appear in your payment history once
           confirmed.
         </div>
@@ -62,7 +62,7 @@ export default async function PaymentsPage({
               <input type="hidden" name="type" value="DUES" />
               <button
                 type="submit"
-                className="rounded-md bg-emerald-700 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-800"
+                className="rounded-md bg-brand-700 px-4 py-2 text-sm font-medium text-white hover:bg-brand-800"
               >
                 Pay annual dues ({currency})
               </button>
@@ -87,7 +87,7 @@ export default async function PaymentsPage({
               />
               <button
                 type="submit"
-                className="inline-flex h-10 items-center justify-center rounded-md bg-zinc-900 px-4 text-sm font-medium text-white hover:bg-zinc-800"
+                className="inline-flex h-10 items-center justify-center rounded-md bg-gold-700 px-4 text-sm font-medium text-white hover:bg-gold-800"
               >
                 Donate
               </button>

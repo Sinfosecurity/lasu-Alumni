@@ -14,11 +14,11 @@ export default async function HomePage() {
 
   return (
     <div>
-      <section className="bg-gradient-to-b from-emerald-50 to-white">
+      <section className="bg-gradient-to-b from-brand-50 to-white">
         <div className="mx-auto max-w-6xl px-4 py-16">
           <div className="grid gap-10 md:grid-cols-2 md:items-center">
             <div>
-              <p className="text-sm font-medium text-emerald-800">
+              <p className="text-sm font-medium text-brand-800">
                 LASU Engineering 2001 Global Alumni Digital Platform
               </p>
               <h1 className="mt-4 text-4xl font-semibold tracking-tight text-zinc-900 sm:text-5xl">
@@ -34,7 +34,7 @@ export default async function HomePage() {
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/register"
-                  className="inline-flex h-11 items-center justify-center rounded-md bg-emerald-700 px-5 text-sm font-medium text-white hover:bg-emerald-800"
+                  className="inline-flex h-11 items-center justify-center rounded-md bg-brand-700 px-5 text-sm font-medium text-white hover:bg-brand-800"
                 >
                   Request membership
                 </Link>
@@ -52,7 +52,7 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-emerald-100 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-brand-100 bg-white p-6 shadow-sm">
               <div className="text-sm font-medium text-zinc-900">
                 What you can do on the platform
               </div>
@@ -67,7 +67,7 @@ export default async function HomePage() {
                 <li>- Official governance announcements and document sharing</li>
                 <li>- Media & legacy archive (photos, documents, achievements)</li>
               </ul>
-              <div className="mt-6 rounded-lg bg-emerald-50 px-4 py-3 text-sm text-emerald-950">
+              <div className="mt-6 rounded-lg bg-brand-50 px-4 py-3 text-sm text-brand-900">
                 <span className="font-medium">Security:</span> encrypted
                 passwords, role-based access control, admin approval workflow,
                 and activity logs.
@@ -154,7 +154,7 @@ export default async function HomePage() {
             <div className="flex flex-col gap-3 sm:flex-row md:justify-end">
               <Link
                 href="/register"
-                className="inline-flex h-11 items-center justify-center rounded-md bg-emerald-600 px-5 text-sm font-medium text-white hover:bg-emerald-700"
+                className="inline-flex h-11 items-center justify-center rounded-md bg-brand-600 px-5 text-sm font-medium text-white hover:bg-brand-700"
               >
                 Request membership
               </Link>
