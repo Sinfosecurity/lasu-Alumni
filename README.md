@@ -1,36 +1,147 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LASU Engineering 2001 Alumni Platform (MVP)
 
-## Getting Started
+Secure, role-based alumni platform for membership approvals, directory, department hubs, events/RSVPs, announcements, media, and Stripe-backed payments.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 (App Router) + TypeScript + Tailwind CSS
+- Prisma ORM + PostgreSQL
+- NextAuth (credentials/email+password)
+- Stripe Checkout + webhook
+
+## MVP Coverage
+
+### Public pages
+
+- `/` Home
+- `/about`
+- `/register`
+- `/login`
+- `/contact`
+- `/verify-email`
+
+### Protected member pages
+
+- `/dashboard`
+- `/profile`
+- `/directory`, `/directory/[id]`
+- `/departments`, `/departments/[slug]`
+- `/events`, `/events/[id]`
+- `/payments`
+- `/announcements`
+- `/media`
+- `/pending-approval`
+
+### Admin panel
+
+- `/admin` (summary + basic analytics)
+- `/admin/members` (approve/reject)
+- `/admin/users` (role assignment, super-admin only)
+- `/admin/events`
+- `/admin/announcements`
+- `/admin/payments`
+- `/admin/audit`
+
+## Environment Setup
+
+1. Copy local template:
+
+```bash
+cp .env.example .env
+```
+
+2. Set required values in `.env`:
+
+- `DATABASE_URL`
+- `NEXTAUTH_SECRET`
+- `SUPER_ADMIN_PASSWORD`
+
+3. Optional integrations:
+
+- SMTP: `SMTP_URL`, `MAIL_FROM`
+- Stripe: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` (and optionally `STRIPE_PUBLIC_KEY`)
+
+## Local Development
+
+1. Start PostgreSQL:
+
+```bash
+docker compose up -d db
+```
+
+2. Install dependencies and prepare DB:
+
+```bash
+npm install
+npm run db:generate
+npm run db:migrate
+npm run db:seed
+```
+
+3. Run app:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+App: `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Stripe Webhook (Local)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+If Stripe is configured, forward webhooks:
 
-## Learn More
+```bash
+stripe listen --forward-to localhost:3000/api/stripe/webhook
+```
 
-To learn more about Next.js, take a look at the following resources:
+Set returned signing secret as `STRIPE_WEBHOOK_SECRET`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Docker Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Option A: App + DB with Compose
 
-## Deploy on Vercel
+1. Copy Docker env template:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+cp .env.docker.example .env
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. Update secrets in `.env` (`NEXTAUTH_SECRET`, `SUPER_ADMIN_PASSWORD`, Stripe keys as needed).
+   Use `DOCKER_DATABASE_URL` to override the default container DB URL when needed.
+
+3. Build/start:
+
+```bash
+docker compose up --build -d
+```
+
+App runs on `http://localhost:3000`.
+
+On startup, the container runs `prisma migrate deploy` and seeds the 3 departments plus the initial Super Admin (idempotent).
+
+### Option B: Build image directly
+
+```bash
+docker build -t lasu-eng-2001-platform .
+docker run --rm -p 3000:3000 --env-file .env lasu-eng-2001-platform
+```
+
+## Useful Scripts
+
+- `npm run dev`
+- `npm run build`
+- `npm run start`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run db:generate`
+- `npm run db:migrate`
+- `npm run db:migrate:deploy`
+- `npm run db:seed`
+
+## Basic Checks
+
+```bash
+npm run lint
+npm run typecheck
+npm run build
+```

@@ -1,0 +1,303 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  MEMBER
+  DEPT_REP
+  EXEC_ADMIN
+  SUPER_ADMIN
+}
+
+enum MemberStatus {
+  PENDING
+  ACTIVE
+  SUSPENDED
+  REJECTED
+}
+
+enum ContactPreference {
+  PUBLIC
+  MEMBERS_ONLY
+  PRIVATE
+}
+
+enum AnnouncementScope {
+  GLOBAL
+  DEPARTMENT
+}
+
+enum EventVisibility {
+  GLOBAL
+  DEPARTMENT
+}
+
+enum EventRsvpStatus {
+  GOING
+  MAYBE
+  NOT_GOING
+}
+
+enum PaymentType {
+  DUES
+  EVENT_TICKET
+  DONATION
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+  CANCELED
+}
+
+enum MediaType {
+  PHOTO
+  VIDEO
+  DOCUMENT
+}
+
+model Department {
+  id   String @id @default(cuid())
+  name String
+  slug String @unique
+
+  users         User[]
+  announcements Announcement[]
+  events        Event[]
+  media         MediaItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id           String       @id @default(cuid())
+  email        String       @unique
+  passwordHash String
+  role         Role         @default(MEMBER)
+  status       MemberStatus @default(PENDING)
+
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id])
+
+  approvedAt    DateTime?
+  approvedById  String?
+  approvedBy    User?     @relation("UserApproval", fields: [approvedById], references: [id], onDelete: SetNull)
+  approvedUsers User[]    @relation("UserApproval")
+
+  emailVerifiedAt DateTime?
+  lastLoginAt     DateTime?
+
+  profile Profile?
+
+  eventsCreated        Event[]        @relation("EventCreator")
+  announcementsCreated Announcement[] @relation("AnnouncementCreator")
+  mediaUploaded        MediaItem[]    @relation("MediaUploader")
+  auditLogs            AuditLog[]     @relation("AuditActor")
+
+  rsvps    EventRsvp[]
+  payments Payment[]
+
+  emailVerificationTokens EmailVerificationToken[]
+  passwordResetTokens     PasswordResetToken[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Profile {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  fullName            String
+  matricNumber        String?
+  graduationConfirmed Boolean           @default(false)
+  phone               String
+  country             String
+  professionalTitle   String
+  employer            String
+  photoUrl            String?
+  bio                 String?
+  contactPreference   ContactPreference @default(MEMBERS_ONLY)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Announcement {
+  id    String @id @default(cuid())
+  title String
+  body  String
+
+  scope        AnnouncementScope @default(GLOBAL)
+  departmentId String?
+  department   Department?       @relation(fields: [departmentId], references: [id], onDelete: SetNull)
+
+  createdById String
+  createdBy   User   @relation("AnnouncementCreator", fields: [createdById], references: [id], onDelete: Restrict)
+
+  publishedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([scope, publishedAt])
+  @@index([departmentId, publishedAt])
+}
+
+model Event {
+  id          String @id @default(cuid())
+  title       String
+  description String
+
+  startAt  DateTime
+  endAt    DateTime?
+  timeZone String
+
+  location      String?
+  coverImageUrl String?
+
+  visibility   EventVisibility @default(GLOBAL)
+  departmentId String?
+  department   Department?     @relation(fields: [departmentId], references: [id], onDelete: SetNull)
+
+  createdById String
+  createdBy   User   @relation("EventCreator", fields: [createdById], references: [id], onDelete: Restrict)
+
+  publishedAt DateTime?
+
+  rsvps    EventRsvp[]
+  payments Payment[]
+  media    MediaItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([startAt])
+  @@index([visibility, publishedAt])
+  @@index([departmentId, publishedAt])
+}
+
+model EventRsvp {
+  id      String          @id @default(cuid())
+  eventId String
+  userId  String
+  status  EventRsvpStatus @default(GOING)
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([eventId, userId])
+  @@index([userId, createdAt])
+}
+
+model Payment {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type   PaymentType
+  status PaymentStatus @default(PENDING)
+
+  amount      Int
+  currency    String  @default("NGN")
+  description String?
+
+  eventId String?
+  event   Event?  @relation(fields: [eventId], references: [id], onDelete: SetNull)
+
+  stripeCheckoutSessionId String?   @unique
+  stripePaymentIntentId   String?   @unique
+  paidAt                  DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, createdAt])
+  @@index([type, status])
+}
+
+model MediaItem {
+  id    String    @id @default(cuid())
+  title String
+  type  MediaType
+  url   String
+
+  departmentId String?
+  department   Department? @relation(fields: [departmentId], references: [id], onDelete: SetNull)
+
+  eventId String?
+  event   Event?  @relation(fields: [eventId], references: [id], onDelete: SetNull)
+
+  uploadedById String
+  uploadedBy   User   @relation("MediaUploader", fields: [uploadedById], references: [id], onDelete: Restrict)
+
+  createdAt DateTime @default(now())
+
+  @@index([departmentId, createdAt])
+  @@index([eventId, createdAt])
+}
+
+model AuditLog {
+  id      String  @id @default(cuid())
+  actorId String?
+  actor   User?   @relation("AuditActor", fields: [actorId], references: [id], onDelete: SetNull)
+
+  action   String
+  entity   String
+  entityId String?
+
+  ip        String?
+  userAgent String?
+  metadata  Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([actorId, createdAt])
+  @@index([entity, entityId])
+}
+
+model EmailVerificationToken {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  token     String   @unique
+  expiresAt DateTime
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model PasswordResetToken {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  token     String   @unique
+  expiresAt DateTime
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
