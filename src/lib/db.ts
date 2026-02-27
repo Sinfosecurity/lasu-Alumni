@@ -61,6 +61,7 @@ export const prisma: InstanceType<typeof PrismaClient> = new Proxy(
   {} as InstanceType<typeof PrismaClient>,
   {
     get(_target, prop) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const client = getPrisma() as any;
       const value = client[prop];
       return typeof value === "function" ? value.bind(client) : value;

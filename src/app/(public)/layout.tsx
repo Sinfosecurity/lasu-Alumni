@@ -8,13 +8,13 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
           <Link href="/" className="flex items-center gap-3">
             <span className="inline-flex rounded-full bg-white p-0.5 shadow-sm ring-1 ring-zinc-200">
-              <span className="relative size-10 overflow-hidden rounded-full">
+              <span className="relative size-11 overflow-hidden rounded-full">
                 <Image
-                  src="/logo.png"
+                  src="/logo-mark.png"
                   alt="LASU Engineering 2001 Alumni"
                   fill
-                  sizes="40px"
-                  className="object-cover scale-110"
+                  sizes="44px"
+                  className="object-cover"
                   priority
                 />
               </span>
@@ -77,4 +77,3 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
     </div>
   );
 }
-
